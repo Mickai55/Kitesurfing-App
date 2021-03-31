@@ -8,10 +8,11 @@ import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
   styleUrls: ['./locations.component.css']
 })
 export class LocationsComponent implements OnInit {
+  
   public locations: Location[] = [
-    { _id: 0, name: "Little Rock", country: "China", latitude: "803.88", longitude: "807.87", wind_prob: "41.9%", when_to_go: "April"},
-    { _id: 1, name: "Fort Pierce", country: "Colombia", latitude: "325.21", longitude: "957.37", wind_prob: "57.0%", when_to_go: "December"},
-    { _id: 2, name: "Manssas", country: "Tunisia", latitude: "492.77", longitude: "933.65", wind_prob: "33.5%", when_to_go: "June"},
+    { _id: 0, name: "Shanghai", country: "China", latitude: "31", longitude: "121", wind_prob: "41.9%", when_to_go: "April"},
+    { _id: 1, name: "Baranquilla", country: "Colombia", latitude: "10", longitude: "-74", wind_prob: "57.0%", when_to_go: "December"},
+    { _id: 2, name: "Tunis", country: "Tunisia", latitude: "36", longitude: "10", wind_prob: "33.5%", when_to_go: "June"},
   ]
 
   closeResult = '';
