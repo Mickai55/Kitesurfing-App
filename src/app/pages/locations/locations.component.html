@@ -1,0 +1,41 @@
+<p>locations works!</p>
+
+<table datatable class="row-border hover stripe">
+    <thead>
+      <tr>
+        <th scope="col">Name</th>
+        <th scope="col">Country</th>
+        <th scope="col">Latitude</th>
+        <th scope="col">Longitude</th>
+        <th scope="col">Wind Prob.</th>
+        <th scope="col">When To Go</th>
+      </tr>
+    </thead>
+    <tbody style="cursor: pointer;">
+      <tr *ngFor="let loc of locations; let i = index" (click)="openModal(content, i)">
+        <td>{{loc.name}}</td>
+        <td>{{loc.country}}</td>
+        <td>{{loc.latitude}}</td>
+        <td>{{loc.longitude}}</td>
+        <td>{{loc.wind_prob}}</td>
+        <td>{{loc.when_to_go}}</td>
+      </tr>
+    </tbody>
+</table>
+
+<ng-template #content let-modal>
+    <div class="modal-header"> 
+    </div>
+    <div class="modal-body">
+        <p>{{location.name}}</p> 
+        <p>{{location.country}}</p> 
+        <p>{{location.latitude}}</p> 
+        <p>{{location.longitude}}</p> 
+        <p>{{location.wind_prob}}</p> 
+        <p>{{location.when_to_go}}</p> 
+    </div>
+    <div class="modal-footer">
+        
+    </div>
+</ng-template>
+  
