@@ -1,9 +1,10 @@
 export interface Location {
-    _id: number;
+    id: string;
     name: string;
     country: string;
-    latitude: string;
-    longitude: string;
-    wind_prob: string;
-    when_to_go: string;
+    lat: string;
+    long: string;
+    probability: number;
+    month: string;
+    createdAt: string;
 }

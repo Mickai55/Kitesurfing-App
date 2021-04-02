@@ -6,8 +6,8 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { AppRoutingModule } from './app-routing.module';
 import { DataTablesModule } from "angular-datatables";
 import { HttpClientModule } from '@angular/common/http';
-import { MarkerService } from './marker.service';
-import { PopupService } from './popup.service';
+import { MarkerService } from './services/map-services/marker.service';
+import { PopupService } from './services/map-services/popup.service';
 
 
 import { LocationsComponent } from './pages/locations/locations.component';
@@ -34,7 +34,8 @@ import { MapComponent } from './map/map.component';
   ],
   providers: [
     MarkerService, 
-    PopupService
+    PopupService,
+    MapComponent 
   ], 
   bootstrap: [AppComponent] 
 })

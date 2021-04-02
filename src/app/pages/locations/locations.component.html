@@ -15,10 +15,10 @@
       <tr *ngFor="let loc of locations; let i = index" (click)="openModal(content, i)">
         <td>{{loc.name}}</td>
         <td>{{loc.country}}</td>
-        <td>{{loc.latitude}}</td>
-        <td>{{loc.longitude}}</td>
-        <td>{{loc.wind_prob}}</td>
-        <td>{{loc.when_to_go}}</td>
+        <td>{{loc.lat}}</td>
+        <td>{{loc.long}}</td>
+        <td>{{loc.probability}}</td>
+        <td>{{loc.month}}</td>
       </tr>
     </tbody>
 </table>
@@ -29,13 +29,15 @@
     <div class="modal-body">
         <p>{{location.name}}</p> 
         <p>{{location.country}}</p> 
-        <p>{{location.latitude}}</p> 
-        <p>{{location.longitude}}</p> 
-        <p>{{location.wind_prob}}</p> 
-        <p>{{location.when_to_go}}</p> 
+        <p>{{location.lat}}</p> 
+        <p>{{location.long}}</p> 
+        <p>{{location.probability}}</p> 
+        <p>{{location.month}}</p> 
     </div>
     <div class="modal-footer">
         
     </div>
-</ng-template>
+</ng-template> 
+
+<!-- <button (click)="f()">xx</button>    -->
   

@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Location } from 'src/app/interfaces/location';
 import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
+import { MainService } from 'src/app/services/api-services/main.service';
+import { MapComponent } from 'src/app/map/map.component';
 
 @Component({
   selector: 'app-locations',
@@ -9,21 +11,56 @@ import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 })
 export class LocationsComponent implements OnInit {
   
-  public locations: Location[] = [
-    { _id: 0, name: "Shanghai", country: "China", latitude: "31", longitude: "121", wind_prob: "41.9%", when_to_go: "April"},
-    { _id: 1, name: "Baranquilla", country: "Colombia", latitude: "10", longitude: "-74", wind_prob: "57.0%", when_to_go: "December"},
-    { _id: 2, name: "Tunis", country: "Tunisia", latitude: "36", longitude: "10", wind_prob: "33.5%", when_to_go: "June"},
-  ]
+  public locations: Location[];
 
-  closeResult = '';
   clickedLocationIndex = -1;
   location: Location;
-  constructor(private modalService: NgbModal) {}
-  ngOnInit(): void {}
+  loading = false;
+
+  constructor(
+    private modalService: NgbModal,
+    private mainService: MainService,
+    private mapComponent: MapComponent
+  ) {}
+
+  ngAfterViewInit() {
+  }
 
   openModal(content, i) {
     this.modalService.open(content, {ariaLabelledBy: 'modal-basic-title'});
     this.clickedLocationIndex = i;
     this.location = this.locations[this.clickedLocationIndex];
   }
+
+  async ngOnInit(): Promise<void> {
+    //  if (this.loading === true)
+    await this.getSpots();
+    this.mapComponent.mapFunc(this.locations);
+  }
+
+  public async getSpots(): Promise<boolean> {
+    return new Promise((resolve, reject) => {
+      this.mainService.getSpots().subscribe( 
+          (response) => {
+              this.locations = response;
+              resolve(true);
+          }, err => {
+              console.error(err);
+              reject(false);
+          });
+    })
+  }
+
+  // f() {
+  //   console.log(this.locations)
+  // }
+
+  // public async getSpots() {
+  //   this.mainService.getSpots().subscribe( (response) => {
+  //     this.locations = response;
+  //     // this.loading = true;
+  //   });
+  // }
+
+  
 }

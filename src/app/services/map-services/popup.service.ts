@@ -10,7 +10,8 @@ export class PopupService {
     return `` +
       `<div>Name: ${ data.name }</div>` +
       `<div>Country: ${ data.country }</div>` +
-      `<div>Wind probability: ${ data.wind_prob }</div>` +
-      `<div>When to go: ${ data.when_to_go }</div>`
+      `<div>Coordinates: ${ data.lat }, ${ data.long }</div>` +
+      `<div>Wind probability: ${ data.probability }</div>` +
+      `<div>When to go: ${ data.month }</div>`
   }
 }
