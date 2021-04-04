@@ -30,7 +30,6 @@ export class MainService {
     };
   }
 
-
   getSpots(): Observable<any> {
     return this.http
       .get(this.url + '/spot') 
@@ -42,33 +41,20 @@ export class MainService {
 
   register(data: any): Observable<any> {
     return this.http
-      .post('http://localhost:8443/api/users/register', data, this.getHeaders())
+      .post(this.url + '/user', data, this.getHeaders())
       .pipe(
         tap((response) => console.log(response)),
         catchError(this.handleError('registerDemoAPI'))
       );
   }
-
+  
   login(data: any): Observable<any> {
     return this.http
-      .get('http://localhost:8443/api/users/login' + '?email=' + data.email + '&password=' + data.password, this.getHeaders())
+      .post(this.url + '/login', data, this.getHeaders())
       .pipe(
         tap((response) => {
           localStorage.setItem('token', response.token);
-          console.log(response)
         })
       );
   }
-  // login(data: any): Observable<any> {
-  //   return this.http
-  //     .post('http://localhost:3000/users/login', data, this.getHeaders())
-  //     .pipe(
-  //       tap((response) => {
-  //         localStorage.setItem('token', response.token);
-  //       })
-  //     );
-  // }
-
-
-
 }

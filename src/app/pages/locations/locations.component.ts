@@ -1,30 +1,31 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { Location } from 'src/app/interfaces/location';
 import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 import { MainService } from 'src/app/services/api-services/main.service';
 import { MapComponent } from 'src/app/map/map.component';
+import { MatSort } from '@angular/material/sort';
+import { MatTableDataSource } from '@angular/material/table';
+import { MatPaginator } from '@angular/material/paginator';
 
 @Component({
   selector: 'app-locations',
   templateUrl: './locations.component.html',
   styleUrls: ['./locations.component.css']
 })
-export class LocationsComponent implements OnInit {
-  
-  public locations: Location[];
+export class LocationsComponent implements OnInit  {
+
+  public locations: Location[] = [];
 
   clickedLocationIndex = -1;
   location: Location;
   loading = false;
+  serverError = false;
 
   constructor(
     private modalService: NgbModal,
     private mainService: MainService,
     private mapComponent: MapComponent
   ) {}
-
-  ngAfterViewInit() {
-  }
 
   openModal(content, i) {
     this.modalService.open(content, {ariaLabelledBy: 'modal-basic-title'});
@@ -33,9 +34,10 @@ export class LocationsComponent implements OnInit {
   }
 
   async ngOnInit(): Promise<void> {
-    //  if (this.loading === true)
     await this.getSpots();
-    this.mapComponent.mapFunc(this.locations);
+    this.loading = false;
+    this.initializeTable();
+    this.mapComponent.mapFunc(this.locations); 
   }
 
   public async getSpots(): Promise<boolean> {
@@ -43,24 +45,34 @@ export class LocationsComponent implements OnInit {
       this.mainService.getSpots().subscribe( 
           (response) => {
               this.locations = response;
+              this.loading = true;
               resolve(true);
           }, err => {
               console.error(err);
+              this.serverError = true;
               reject(false);
           });
     })
   }
 
-  // f() {
-  //   console.log(this.locations)
-  // }
+  displayedColumns: string[] = ['name', 'country', 'lat', 'long', 'prob', 'month'];
+  dataSource: any;
+   
+  @ViewChild(MatPaginator) paginator: MatPaginator;
+  @ViewChild(MatSort) sort: MatSort;
 
-  // public async getSpots() {
-  //   this.mainService.getSpots().subscribe( (response) => {
-  //     this.locations = response;
-  //     // this.loading = true;
-  //   });
-  // }
+  initializeTable() {
+    this.dataSource = new MatTableDataSource(this.locations);
+    this.dataSource.paginator = this.paginator;
+    this.dataSource.sort = this.sort;
+  }
 
-  
+  applyFilter(event: Event) {
+    const filterValue = (event.target as HTMLInputElement).value;
+    this.dataSource.filter = filterValue.trim().toLowerCase();
+
+    if (this.dataSource.paginator) {
+      this.dataSource.paginator.firstPage();
+    }
+  }
 }

@@ -47,5 +47,4 @@ export class MapComponent implements AfterViewInit {
     this.initMap();
     this.markerService.locationMarkers(this.map, loc);
   }
-
 }
